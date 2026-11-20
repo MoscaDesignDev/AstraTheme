@@ -1,0 +1,244 @@
+/* All New Astra Theme Styles */
+
+@use "sass:map";
+@use "sass:color";
+
+/* ─── Fonts (Adobe kit isy3efv) ───────────────────────────── */
+$font-title: "ivypresto-headline", Georgia, serif;
+$font-body:  "neue-haas-grotesk-text", "Helvetica Neue", Arial, sans-serif;
+$font-ui:    "neue-haas-grotesk-display", "Helvetica Neue", Arial, sans-serif;
+
+$fw-light:   300;
+$fw-regular: 400;
+$fw-medium:  500;
+$fw-bold:    700;
+
+$gold:      #df9f12;
+$black:     #000000;
+$dark-blue: #0f095f;
+$white: #dddddd;
+
+:root {
+  --font-title: #{$font-title};
+  --font-body:  #{$font-body};
+  --font-ui:    #{$font-ui};
+  --gold:       #{$gold};
+  --black:      #{$black};
+  --dark-blue:  #{$dark-blue};
+  --white:      #{$white}
+}
+
+$fonts: (
+  title: var(--font-title),
+  body:  var(--font-body),
+  ui:    var(--font-ui),
+);
+
+$bp: (
+  xxl: 1600px,
+  xl:  1440px,
+  lg:  1200px,
+  tab: 921px,   // Astra tablet
+  md:  768px,
+  mob: 544px,   // Astra mobile
+  sm:  375px,
+);
+
+
+
+@mixin font($family, $weight: null, $size: null, $lh: null) {
+  font-family: map.get($fonts, $family);
+  font-weight: $weight;
+  font-size:   $size;
+  line-height: $lh;
+}
+
+@mixin bp($key) {
+  @media (max-width: map-get($bp, $key)) { @content; }
+}
+
+/* ─── Base ────────────────────────────────────────────────── */
+body {
+  font-family: var(--font-body);
+  font-weight: $fw-regular;
+  line-height: 1.6;
+}
+
+strong, b { font-weight: $fw-bold; }
+
+/* ─── Titles ──────────────────────────────────────────────── */
+h1, h2, h3, h4,
+.entry-title,
+.product_title,
+.woocommerce-loop-product__title {
+  font-family: var(--font-title);
+  font-weight: $fw-light;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+}
+
+/* ─── UI / Display ────────────────────────────────────────── */
+h5, h6,
+.ast-builder-menu-1 a,
+.main-header-menu a,
+.button, button,
+.ast-custom-button {
+  font-family: var(--font-ui);
+  font-weight: $fw-medium;
+}
+
+/* ─── Divi Builder bridge (remove when Divi Builder is retired) */
+.et-db #et-boc .et-l {
+  &, h1, h2, h3, h4, h5, h6, p, li, a { font-family: inherit; }
+}
+
+/* Page Width Breakpoints - Astra Override */
+@media (min-width: 922px) {
+  .ast-container { max-width: 1440px; } /* Customizer container width + 40px padding */
+}
+
+/* Header */
+
+.site-header {
+
+  background-color: var(--black);
+  color: var(--white);
+
+  .ast-site-title-wrap {
+    display: none;
+  }
+
+  #ast-desktop-header {
+    .ast-above-header-wrap,
+    .ast-main-header-wrap,
+    .ast-below-header-wrap {
+      display: flex;
+    }
+    .ast-above-header-wrap {
+      .ast-above-header {
+        &.ast-above-header-bar {
+          width: 100%;
+          background: transparent;
+          padding: 10px 0 0 0;
+          .site-header-section {
+            &.site-header-above-section-left {
+              .ast-builder-social-element {
+                background-color: var(--color);
+                padding: 10px;
+                border-radius: 50%;
+              }
+              ul {
+                list-style-type: none;
+                display: flex;
+                flex-direction: row;
+                justify-content: center;
+                align-items: center;
+                margin: 0;
+                li {
+                  display: flex;
+                  position: relative;
+                  a {
+                    @include font(title, $fw-light, 13px, 13px);
+                    color: var(--gold);
+                    padding: 10px;
+                    display: flex;
+                    flex: 1;
+                    transition: .3s;
+                    &:hover {
+                      color: var(--white);
+                      transition: .3s;
+                    }
+                  }
+                  &:last-child {
+                    a {
+                      &::before {
+                        content: "";
+                        display: inline-block;
+                        width: 22px;
+                        height: 22px;
+                        background-color: currentColor;
+                        mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='9' cy='21' r='1'/%3E%3Ccircle cx='20' cy='21' r='1'/%3E%3Cpath d='M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6'/%3E%3C/svg%3E") center / contain no-repeat;
+                      }
+                    }
+                  }
+                }
+              }
+            }
+            &.site-header-above-section-right {
+              .ast-builder-layout-element {
+                display: flex;
+                justify-content: flex-end;
+              }
+            }
+          }
+        }
+      }
+    }
+    .ast-main-header-wrap {
+      .ast-primary-header-bar {
+        background-color: transparent;
+        width: 100%;
+        .ast-builder-grid-row {
+          &.ast-grid-center-col-layout {
+            display: grid;
+            grid-template-columns: auto 1fr;   // first column sizes to its content
+            grid-template-rows: auto auto;
+            > :first-child { grid-row: 1 / -1; }
+          }
+        }
+        .site-header-section {
+          &.site-header-primary-section-left {
+            .site-logo-img {
+              img {
+                width: auto;
+                height: 120px;
+              }
+            }
+          }
+          &.site-header-primary-section-center {
+            justify-content: flex-start;
+            text-align: left;
+            p {
+              strong {
+                @include font(title, $fw-light, 30px, 35px);
+                color: var(--gold);
+              }
+            }
+          }
+          &.site-header-primary-section-right {
+            justify-content: flex-end;
+            text-align: right;
+            .ast-grid-right-center-section {
+              display: none;
+            }
+            .ast-builder-social-element {
+              background-color: var(--color);
+              padding: 10px;
+              border-radius: 50%;
+            }
+          }
+        }
+      }
+    }
+    .ast-below-header-wrap {
+      .ast-below-header-bar {
+        width: 100%;
+        .site-header-section {
+          &.site-header-below-section-left {
+            display: none;
+          }
+          &.site-header-below-section-right {
+
+          }
+        }
+      }
+    }
+  }
+  
+  #ast-mobile-header {
+
+  }
+}
+
+
+
